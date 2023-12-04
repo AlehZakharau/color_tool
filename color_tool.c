@@ -8,7 +8,7 @@ typedef struct color{
 } color;
 
 void print_color(color *col){
-   printf("Color: <%.2lf,%.2lf,%.2lf>\n", col->r, col->g, col->b);
+   printf("Color: < %.2lf | %.2lf | %.2lf >\n", col->r, col->g, col->b);
 }
 
 void check_range(double *c){
