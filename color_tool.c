@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include "hex.h"
 
 typedef struct color{
    double r;
@@ -9,6 +10,10 @@ typedef struct color{
 
 void print_color(color *col){
    printf("Color: < %.2lf | %.2lf | %.2lf >\n", col->r, col->g, col->b);
+}
+
+void remap(double *value, double min, double max, double newMin, double newMax){
+   *value = newMin + (newMax - newMin) * (*value - min) / (max - min);
 }
 
 void check_range(double *c){
@@ -38,13 +43,17 @@ void chaeck_input_small_color(color *col){
 }
 
 color convert_color(color *col){
-   color col_out = { col->r / 255.0, col->g / 255.0, col->b / 255.0 };
-   return col_out;
+   remap(&col->r, 0, 255, 0, 1);
+   remap(&col->g, 0, 255, 0, 1);
+   remap(&col->b, 0, 255, 0, 1);
+   return *col;
 }
 
 color conver_color_to_big(color *col){
-   color col_out = { col->r * 255.0, col->g * 255.0, col->b * 255.0 };
-   return col_out;
+   remap(&col->r, 0, 1, 0, 255);
+   remap(&col->g, 0, 1, 0, 255);
+   remap(&col->b, 0, 1, 0, 255);
+   return *col;
 }
 
 void input_big_range_color(color *col){
@@ -82,7 +91,6 @@ void input_small_range_color(color *col){
    print_color(&col_out);
    printf("\n:::\n\n");
 }
-
 
 int input_command(color *col){
    int command;
